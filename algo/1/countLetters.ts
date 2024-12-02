@@ -10,8 +10,13 @@ Exemples :
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Your code here !
-  return 0;
+  let sum = 0;
+  for (const char of givenString) {
+    if (char === letter) {
+      sum += 1;
+    }
+  }
+  return sum;
 }
 
 export default countLetters;
