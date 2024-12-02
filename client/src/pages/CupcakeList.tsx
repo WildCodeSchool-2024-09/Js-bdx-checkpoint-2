@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -31,6 +32,10 @@ const sampleCupcakes = [
     name: "Sweden",
   },
 ];
+export interface Accessory {
+  id: string;
+  name: string;
+}
 
 type CupcakeArray = typeof sampleCupcakes;
 
@@ -43,7 +48,23 @@ function CupcakeList() {
   console.info(useLoaderData() as CupcakeArray);
   console.info(cupcakes);
 
-  // Step 3: get all accessories
+  const [accessories, setAccessories] = useState<Accessory[]>([]);
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch accessories");
+        }
+        return response.json();
+      })
+      .then((data: Accessory[]) => {
+        console.info("Accessories fetched:", data);
+        setAccessories(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching accessories:", error);
+      });
+  }, []);
 
   // Step 5: create filter state
 
@@ -56,12 +77,15 @@ function CupcakeList() {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: map cupcakes to display them */}
         {cupcakes.map((cupcake) => (
           <li key={cupcake.id} className="cupcake-item">
             <Cupcake data={cupcake} />
