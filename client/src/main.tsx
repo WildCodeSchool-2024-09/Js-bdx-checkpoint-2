@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         path: "/cupcakes",
         element: <CupcakeList />,
         // Step 1: load data here
-        loader: async () => await fetchApi(),
+        loader: fetchApi,
       },
     ],
   },
