@@ -47,6 +47,7 @@ function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeArray;
   console.info("Loaded cupcakes:", cupcakes);
   const [accessories, setAccessories] = useState<Accessory[]>([]);
+  const [selectedAccessory, setSelectedAccessory] = useState<string>("");
 
   useEffect(() => {
     const fetchAccessories = async () => {
@@ -74,9 +75,17 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={(e) => setSelectedAccessory(e.target.value)}
+          >
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
