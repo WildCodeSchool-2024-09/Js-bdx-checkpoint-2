@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 import { fetchApi } from "../services/fetchApi";
 
@@ -88,7 +88,9 @@ function CupcakeList() {
         {/* Step 2: repeat this block for each cupcake */}
         {filteredCupckakes.map((cupcake) => (
           <li className="cupcake-item" key={cupcake.id}>
-            <Cupcake data={cupcake} />
+            <Link to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake data={cupcake} />
+            </Link>
           </li>
         ))}
         {/* Step 5: filter cupcakes before repeating */}
