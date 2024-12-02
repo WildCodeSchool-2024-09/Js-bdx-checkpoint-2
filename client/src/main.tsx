@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
 
+import { fetchCupCake } from "./loader";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        // Step 1: load data here
+        loader: fetchCupCake,
       },
     ],
   },
