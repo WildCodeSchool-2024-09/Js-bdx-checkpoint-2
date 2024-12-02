@@ -43,7 +43,9 @@ function CupcakeList() {
   const cupcakes: CupcakeArray = useLoaderData() as CupcakeArray;
   console.info(useLoaderData() as CupcakeArray);
 
-  const accessories = Array.from(new Set(cupcakes.map((cupcake) => cupcake.accessory)));
+  const accessories = Array.from(
+    new Set(cupcakes.map((cupcake) => cupcake.accessory)),
+  );
 
   // Step 3: get all accessories
 
@@ -58,7 +60,11 @@ function CupcakeList() {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            
+            {accessories.map((accessory) => (
+              <option key={accessory} value={accessory}>
+                {accessory}
+              </option>
+            ))}
             {/* Step 4: add an option for each accessory */}
           </select>
         </label>
