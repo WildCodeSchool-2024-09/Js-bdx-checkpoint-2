@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "react-router-dom";
 
-export type Cupcake = {
+export type CupcakeData = {
   id: number;
   accessory_id: string;
   accessory: string;
