@@ -11,8 +11,16 @@ Si n est inférieur ou égal à 0, la fonction doit retourner un tableau vide []
 */
 
 function getFibonacciSequence(size: number): number[] {
-  // Your code here !
-  return [0, 1];
+  if (size <= 0) return [];
+  if (size === 1) return [0];
+  const result = [0, 1];
+
+  while (result.length < size) {
+    const last = result[result.length - 1];
+    const penultimate = result[result.length - 2];
+    result.push(last + penultimate);
+  }
+  return result;
 }
 
 export default getFibonacciSequence;
