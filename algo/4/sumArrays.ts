@@ -11,7 +11,26 @@ sumArr( ["2", "5", "3"], ["2", "4", "9", "5", "5"] ) should return ["4", "9", "1
 
 function sumArr(arrayA: string[], arrayB: string[]): string[] {
   // Your code here !
-  return [];
+  const results = [];
+
+  const lengthDiff = arrayA.length - arrayB.length;
+
+  if (lengthDiff > 0) {
+    for (let i = 0; i < lengthDiff; i++) {
+      arrayB.push("0");
+    }
+  } else if (lengthDiff < 0) {
+    for (let i = 0; i < Math.abs(lengthDiff); i++) {
+      arrayA.push("0");
+    }
+  }
+
+  for (let i = 0; i < arrayA.length; i++) {
+    const sum = Number.parseInt(arrayA[i]) + Number.parseInt(arrayB[i]);
+    results.push(sum.toString());
+  }
+
+  return results;
 }
 
 export default sumArr;
