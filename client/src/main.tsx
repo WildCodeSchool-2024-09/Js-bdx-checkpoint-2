@@ -1,22 +1,36 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  type LoaderFunction,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 /* ************************************************************************* */
 
 import App from "./App";
 
+import CupcakeDetails from "./pages/CupcakeDetails";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
-function cupcakeLoader() {
+function cupcakesLoader() {
   return fetch("http://localhost:3310/api/cupcakes")
     .then((response) => response.json())
     .then((data) => data)
     .catch((err) => console.error(err));
 }
+
+const cupcakeLoader: LoaderFunction = ({ params }) => {
+  const { id } = params;
+
+  return fetch(`http://localhost:3310/api/cupcakes/${id}`)
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((err) => console.error(err));
+};
 
 const router = createBrowserRouter([
   {
@@ -34,8 +48,13 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        loader: cupcakeLoader,
+        loader: cupcakesLoader,
         // Step 1: load data here
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
+        loader: cupcakeLoader,
       },
     ],
   },
