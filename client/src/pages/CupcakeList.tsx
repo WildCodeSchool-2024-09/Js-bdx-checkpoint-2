@@ -1,6 +1,5 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { useState, useEffect } from "react";
 import Cupcake from "../components/Cupcake";
 
 const sampleCupcakes = [
@@ -33,7 +32,7 @@ const sampleCupcakes = [
   },
 ];
 
-type CupcakeData = typeof sampleCupcakes[0];
+type CupcakeData = (typeof sampleCupcakes)[0];
 type CupcakeArray = CupcakeData[];
 type Accessory = { id: number; name: string; slug: string };
 type AccessoryArray = Accessory[];
@@ -43,6 +42,7 @@ function CupcakeList() {
   console.info("Cupcakes:", cupcakes);
 
   const [accessories, setAccessories] = useState<AccessoryArray>([]);
+  const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
@@ -53,8 +53,6 @@ function CupcakeList() {
       })
       .catch((error) => console.error("Error fetching accessories:", error));
   }, []);
-
-  const [filter, setFilter] = React.useState("");
 
   const filteredCupcakes = filter
     ? cupcakes.filter((cupcake) => cupcake.accessory === filter)
