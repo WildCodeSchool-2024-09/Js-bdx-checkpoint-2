@@ -5,6 +5,20 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /* ************************************************************************* */
 
+async function loadCupcakes() {
+  try {
+    const response = await fetch("http://localhost:3310/api/cupcakes");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des cupcakes:", error);
+    throw error;
+  }
+}
+
 import App from "./App";
 
 import CupcakeList from "./pages/CupcakeList";
@@ -27,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        // Step 1: load data here
+        loader: loadCupcakes, // Ajout du chargeur ici
       },
     ],
   },
