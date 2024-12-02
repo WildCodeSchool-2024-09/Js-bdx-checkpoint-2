@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -33,6 +34,10 @@ const sampleCupcakes = [
 ];
 
 type CupcakeArray = typeof sampleCupcakes;
+type Accessory = {
+  id: string;
+  name: string;
+};
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -41,8 +46,24 @@ type CupcakeArray = typeof sampleCupcakes;
 function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeArray;
   console.info("Loaded cupcakes:", cupcakes);
+  const [accessories, setAccessories] = useState<Accessory[]>([]);
 
-  // Step 3: get all accessories
+  useEffect(() => {
+    const fetchAccessories = async () => {
+      try {
+        const response = await fetch("http://localhost:3310/api/accessories");
+        const data = await response.json();
+        setAccessories(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des accessoires:", error);
+      }
+    };
+
+    fetchAccessories();
+  }, []);
+
+  console.info("Loaded cupcakes:", cupcakes);
+  console.info("Loaded accessories:", accessories);
 
   // Step 5: create filter state
 
