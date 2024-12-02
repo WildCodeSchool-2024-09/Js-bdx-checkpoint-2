@@ -45,10 +45,12 @@ type CupcakeArray = typeof sampleCupcakes;
 
 function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeArray;
-  console.info(useLoaderData() as CupcakeArray);
-  console.info(cupcakes);
-
+  const [selectedAccessory, setSelectedAccessory] = useState<string>("");
   const [accessories, setAccessories] = useState<Accessory[]>([]);
+  const filterCupcakes = cupcakes.filter(
+    (cupcake) =>
+      selectedAccessory === "" || cupcake.accessory === selectedAccessory,
+  );
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
       .then((response) => {
@@ -65,20 +67,20 @@ function CupcakeList() {
         console.error("Error fetching accessories:", error);
       });
   }, []);
-
-  // Step 5: create filter state
-
+  console.info(filterCupcakes);
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
-          Filter by{" "}
-          <select id="cupcake-select">
-            <option value="">---</option>
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={(event) => setSelectedAccessory(event.target.value)}
+          >
+            <option value="">-- All Accessories --</option>
             {accessories.map((accessory) => (
-              <option key={accessory.id} value={accessory.id}>
+              <option key={accessory.id} value={accessory.name}>
                 {accessory.name}
               </option>
             ))}
@@ -87,6 +89,11 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {cupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
+        {filterCupcakes.map((cupcake) => (
           <li key={cupcake.id} className="cupcake-item">
             <Cupcake data={cupcake} />
           </li>
