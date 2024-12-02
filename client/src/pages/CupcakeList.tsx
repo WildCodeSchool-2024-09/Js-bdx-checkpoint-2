@@ -1,14 +1,15 @@
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import type { CupCake } from "../types/CupCakeProps";
+import { Link } from "react-router-dom";
+import Cupcake, { type CupcakeData } from "../components/Cupcake";
 
 type AccessoryArray = { id: string; name: string; slug: string };
 function CupcakeList() {
   const [accessories, setAccessories] = useState<AccessoryArray[]>([]);
   const [selectAccessories, setSelectAccessories] = useState<string>("");
-  const [filteredCake, setFilteredCake] = useState<CupCake[]>([]);
+  const [filteredCake, setFilteredCake] = useState<CupcakeData[]>([]);
   // Step 1: get all cupcakes
-  const cupCakes = useLoaderData() as CupCake[];
+  const cupCakes = useLoaderData() as CupcakeData[];
   // Step 3: get all accessories
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
@@ -48,9 +49,12 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {filteredCake.map((cake) => (
-          <li key={cake.id} className="cupcake-item">
-            Nom: {cake.name}
-          </li>
+          <Link key={cake.id} to={`/cupcakes/${cake.id}`}>
+            <li className="cupcake-item">
+              Nom: {cake.name}
+              <Cupcake data={cake} />
+            </li>
+          </Link>
         ))}
       </ul>
     </>

@@ -1,15 +1,17 @@
 import "./Cupcake.css";
 
-export interface CupcakeProps {
-  data: {
-    accessory: string;
-    color1: string;
-    color2: string;
-    color3: string;
-    name: string;
-    id?: number;
-  };
+export interface CupcakeData {
+  accessory: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  name: string;
+  id: number;
+  accessory_id: string;
 }
+export type CupcakeProps = {
+  data: CupcakeData;
+};
 
 function Cupcake({ data }: CupcakeProps) {
   return (

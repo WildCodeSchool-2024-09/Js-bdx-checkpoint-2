@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 
 import "./Home.css";
 
-import Cupcake from "../components/Cupcake";
+import Cupcake, { type CupcakeData } from "../components/Cupcake";
 
-const sampleData = {
+const sampleData: CupcakeData = {
   accessory: "donut",
   color1: "var(--default-cream-color)",
   color2: "var(--default-cream-color)",
   color3: "var(--default-cream-color)",
   name: "",
+  id: 0,
+  accessory_id: "",
 };
 
 function Home() {
