@@ -10,7 +10,7 @@ import App from "./App";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
-import { cupcakesLoader, Loader } from "./types/Loader/loader";
+import { cupcakesLoader } from "./types/Loader/loader";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        loader: cupcakesLoader
+        loader: cupcakesLoader,
         // Step 1: load data here
       },
     ],
