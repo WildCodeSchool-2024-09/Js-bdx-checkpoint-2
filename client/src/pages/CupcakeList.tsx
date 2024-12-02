@@ -40,7 +40,6 @@ type CupcakeArray = typeof sampleCupcakes;
 
 function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeArray;
-
   console.info("Loaded cupcakes:", cupcakes);
 
   // Step 3: get all accessories
