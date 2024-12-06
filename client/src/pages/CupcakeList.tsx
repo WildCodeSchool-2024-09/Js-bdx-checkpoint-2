@@ -1,8 +1,10 @@
+//import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
-const sampleCupcakes = [
+
+const cupcake = [
   {
     id: 10,
     accessory_id: "4",
@@ -32,17 +34,20 @@ const sampleCupcakes = [
   },
 ];
 
-type CupcakeArray = typeof sampleCupcakes;
+type CupcakeArray = typeof cupcake;
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
   console.info(useLoaderData() as CupcakeArray);
 
-  // Step 3: get all accessories
+  // const [selectedAccessory, setSelectedAccessory] = useState<string>("");
+
+  //const filteredCupcakes = selectedAccessory
+  //? cupcake.filter((cupcake) => cupcake.accessory === selectedAccessory)
+  //: cupcake;
 
   // Step 5: create filter state
 
@@ -52,23 +57,29 @@ function CupcakeList() {
       <form className="center">
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
-          Filter by{" "}
+          Filter by{""}
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
           </select>
         </label>
       </form>
-      <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
-        {/* end of block */}
+      <ul className="cupcake-list">
+        {cupcake.map(
+          (cupcake: {
+            accessory: string;
+            color1: string;
+            color2: string;
+            color3: string;
+            name: string;
+          }) => (
+            <li key={cupcake.name} className="cupcake-item">
+              <Cupcake data={cupcake} />
+            </li>
+          ),
+        )}
       </ul>
     </>
   );
 }
-
 export default CupcakeList;
